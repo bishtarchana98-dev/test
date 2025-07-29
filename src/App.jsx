@@ -1,13 +1,3 @@
-//   const boxes = new Array(3).fill({ color: "red" }, { color: "black" });
-//   console.log(boxes);
-
-//   // array.fill(value, start?, end?) //>> start and end are optional
-
-//   const boxesArr = new Array(3).fill(null).map((_, i) => {
-//     console.log(_, i);
-//     return i === 0 ? { color: "red" } : { color: "black" };
-//   });
-//   console.log(boxesArr);
 
 //   // Find function >>>>>>
 //   // incorrect find needs a callback function
