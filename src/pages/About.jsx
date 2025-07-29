@@ -17,7 +17,7 @@ const About = () => {
         {/* Who We Are */}
         <div className="max-w-4xl mx-auto text-center mb-12">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Who We Are
+            I am don
           </h2>
           <p className="text-gray-600 leading-relaxed">
             We’re a passionate team building intuitive products and experiences
