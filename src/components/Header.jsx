@@ -1,0 +1,109 @@
+import { Link } from "react-router-dom";
+import { MdLogout, TfiArrowCircleDown } from "../icons/Icons";
+import { useState } from "react";
+import { IoIosArrowDropdown } from "react-icons/io";
+
+const Header = () => {
+  // State for mobile menu toggle
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Toggle the mobile menu
+  const toggleMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  return (
+    <header className="bg-blue-600 text-white p-4 shadow-md">
+      <div className="flex items-center w-full">
+        {/* Logo */}
+        <h1 className="text-xl font-bold flex-1">My Website</h1>
+
+        {/* Mobile Menu Toggle (Hamburger icon) */}
+        <div className="md:hidden flex items-center">
+          <button onClick={toggleMenu} className="text-white">
+            <IoIosArrowDropdown size={25} />
+            {/* <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg> */}
+          </button>
+        </div>
+
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center space-x-6">
+          <ul className="flex space-x-6">
+            <li>
+              <Link to="/setting" className="hover:text-gray-300">
+                Settings
+              </Link>
+            </li>
+            <li>
+              <img
+                className="rounded-full object-cover border-2 border-white"
+                alt="user-profile"
+                src="/images/user-profile.jpg"
+                height={32}
+                width={32}
+                style={{ width: 32, height: 32 }}
+              />
+            </li>
+            <li className="flex flex-col items-center">
+              <Link className="hover:text-black flex items-center">
+                <MdLogout size={20} />
+              </Link>
+              <small className="text-xs">Logout</small>
+            </li>
+          </ul>
+        </nav>
+
+        {/* Mobile Navigation */}
+        {isMobileMenuOpen && (
+          <nav className="md:hidden absolute top-16 right-0 text-right w-full bg-blue-600 text-white p-4">
+            <ul className="space-y-4 text-right">
+              <li>
+                <div className="flex item-center justify-end space-x-4">
+                  <Link
+                    to="/contact-us"
+                    className="block py-2 px-4 hover:text-gray-300"
+                    onClick={toggleMenu}
+                  >
+                    Settings
+                  </Link>
+                </div>
+              </li>
+              <li>
+                <div className="flex items-center justify-end space-x-4">
+                  <img
+                    className="rounded-full"
+                    alt="user-profile"
+                    src="/images/user-profile.jpg"
+                    height={30}
+                    width={30}
+                  />
+                </div>
+              </li>
+              <li className="flex items-center justify-end space-x-2">
+                <Link className="hover:text-black">
+                  <MdLogout size={25} />
+                </Link>
+                Logout
+              </li>
+            </ul>
+          </nav>
+        )}
+      </div>
+    </header>
+  );
+};
+
+export default Header;
