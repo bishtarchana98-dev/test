@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MdLogout, TfiArrowCircleDown } from "../icons/Icons";
+import { MdLogout } from "../../../icons/Icons";
 import { useState } from "react";
 import { IoIosArrowDropdown } from "react-icons/io";
 
@@ -11,7 +11,7 @@ const Header = () => {
   const toggleMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-
+  
   return (
     <header className="bg-blue-600 text-white p-4 shadow-md">
       <div className="flex items-center w-full">
@@ -22,20 +22,6 @@ const Header = () => {
         <div className="md:hidden flex items-center">
           <button onClick={toggleMenu} className="text-white">
             <IoIosArrowDropdown size={25} />
-            {/* <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
-            </svg> */}
           </button>
         </div>
 
@@ -58,10 +44,10 @@ const Header = () => {
               />
             </li>
             <li className="flex flex-col items-center">
-              <Link className="hover:text-black flex items-center">
+              <Link className="hover:text-black flex items-center" to="/login">
                 <MdLogout size={20} />
               </Link>
-              <small className="text-xs">Logout</small>
+              <small className="text-xs cursor:pointer">Logout</small>
             </li>
           </ul>
         </nav>

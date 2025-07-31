@@ -8,12 +8,10 @@ const MultiFieldForm = () => {
   const currentDate = new Date().toISOString().split("T")[0];
 
   const handleDateChange = (index, value) => {
-    console.log(index, "indesxxx");
     const newDates = [...selectDate];
     newDates[index] = value;
     setSelectDate(newDates);
   };
-
 
   return (
     <form className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-2 sm:p-4 lg:p-6 space-y-4">

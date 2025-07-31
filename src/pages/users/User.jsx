@@ -1,4 +1,4 @@
-import MultiFieldForm from "../components/MultiFieldForm";
+import MultiFieldForm from "../../components/forms/MultiFieldForm";
 
 const User = () => {
   return <MultiFieldForm />;

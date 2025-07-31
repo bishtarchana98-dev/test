@@ -6,7 +6,7 @@ import {
   FiUsers,
   IoHomeOutline,
   LuBox,
-} from "../icons/Icons";
+} from "../../../icons/Icons";
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -131,7 +131,7 @@ const Sidebar = () => {
                  p-3 rounded-lg transition duration-300 
                  text-white"
             >
-              <LuBox  className="text-white" size={22} />
+              <LuBox className="text-white" size={22} />
               {/* {!isMobile &&  */}
               <span className="font-medium">Order Management</span>
               {/* // } */}
