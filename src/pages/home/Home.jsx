@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const AnimatedText = () => {
-  const fullText = "Welcome, Archana!";
+  const fullText = "Welcome, User!";
   const [text, setText] = useState("");
   const [index, setIndex] = useState(0);
 
@@ -61,20 +62,28 @@ const Home = () => {
       <div className="max-w-3xl mx-auto space-y-4 xs:space-y-6">
         <AnimatedText />
 
-        <div className="flex justify-center">
-          <MovingBox />
-        </div>
+        <div className="flex justify-center">{/* <MovingBox /> */}</div>
         <div className="w-full max-w-xs xs:max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl bg-white shadow-md rounded-lg p-4 xs:p-6 sm:p-8 mx-auto">
-          <h3 className="text-base xs:text-lg sm:text-xl md:text-2xl font-semibold text-center">
+          <div className="flex justify-center items-center mb-4">
+            <Link to="/order-management/create-order">
+              <button className="py-2 px-4 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-800 transition cursor-pointer">
+                Create Order
+              </button>
+            </Link>
+            <button className="ms-3 py-2 px-4 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-800 transition cursor-pointer">
+              Update Order
+            </button>
+          </div>
+          {/* <h3 className="text-base xs:text-lg sm:text-xl md:text-2xl font-semibold text-center">
             Card Title
           </h3>
           <p className="text-gray-700 mt-2 text-xs xs:text-sm sm:text-base md:text-lg text-center">
             This is a simple card with some content. You can add more details
             here as needed.
-          </p>
+          </p> */}
         </div>
 
-        <MovingCard />
+        {/* <MovingCard /> */}
       </div>
     </main>
   );

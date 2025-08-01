@@ -11,6 +11,8 @@ import Register from "../pages/auth/Register";
 import OrderManagement from "../pages/orderManagement/OrderManagement";
 import About from "../pages/aboutUs/About";
 import User from "../pages/users/User";
+import CreateOrder from "../pages/orderManagement/CreateOrder";
+import UpdateOrder from "../pages/orderManagement/UpdateOrder";
 
 // Layout for all pages except landing
 const MainLayout = () => (
@@ -42,6 +44,8 @@ const Index = () => {
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/user" element={<User />} />
         <Route path="/order-management" element={<OrderManagement />} />
+        <Route path="/order-management/create-order" element={<CreateOrder />} />
+        <Route path="/order-management/update-order" element={<UpdateOrder />} />
       </Route>
     </Routes>
   );

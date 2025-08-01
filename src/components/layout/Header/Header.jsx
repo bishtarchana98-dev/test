@@ -2,8 +2,17 @@ import { Link } from "react-router-dom";
 import { MdLogout } from "../../../icons/Icons";
 import { useState } from "react";
 import { IoIosArrowDropdown } from "react-icons/io";
+import apiClient from "../../../api/apiClient";
+import { showErrorAlert } from "../../alert/alertService";
 
 const Header = () => {
+  const ROLE = localStorage.getItem("role");
+
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const adminData = JSON.parse(localStorage.getItem("admin"));
+  const teamLeadData = JSON.parse(localStorage.getItem("teamLead"));
+
+  // console.log(userData?.role == "UserAccount", adminData, teamLeadData);
   // State for mobile menu toggle
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -11,7 +20,25 @@ const Header = () => {
   const toggleMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  
+  const handleLogout = async () => {
+    try {
+      let endpoint = "";
+      if (ROLE === "admin") {
+        endpoint = "auth/admin/logout";
+      } else if (ROLE === "team lead") {
+        endpoint = "auth/teamlead/logout";
+      } else if(userData?.role == "UserAccount") {
+        endpoint = "auth/useraccount/logout";
+      }
+      const response = await apiClient.get(endpoint);
+      console.log("response>>", response);
+      localStorage.removeItem("token");
+    } catch (error) {
+      console.error("Logout error:", error);
+      // Handle error (e.g., show a toast notification)
+      showErrorAlert("Logout failed. Please try again.");
+    }
+  };
   return (
     <header className="bg-blue-600 text-white p-4 shadow-md">
       <div className="flex items-center w-full">
@@ -78,7 +105,7 @@ const Header = () => {
                   />
                 </div>
               </li>
-              <li className="flex items-center justify-end space-x-2">
+              <li className="cursor:pointer flex items-center justify-end space-x-2">
                 <Link className="hover:text-black">
                   <MdLogout size={25} />
                 </Link>

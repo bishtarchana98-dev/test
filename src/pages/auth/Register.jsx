@@ -2,13 +2,17 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash, IoHome } from "../../icons/Icons";
 import apiClient from "../../api/apiClient";
+import {
+  showErrorAlert,
+  showSuccessAlert,
+} from "../../components/alert/alertService";
+import { PulseLoader } from "react-spinners";
 
 const Register = () => {
   const navigate = useNavigate();
-  // const [toastId, setToastId] = useState(null);
   const [selectedRole, setSelectedRole] = useState("user");
   const [showPassword, setShowPassword] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     name: "",
     email: "",
@@ -65,6 +69,7 @@ const Register = () => {
     if (!validate()) return;
 
     try {
+      setLoading(true);
       let endpoint = "";
 
       if (selectedRole === "user") {
@@ -79,19 +84,35 @@ const Register = () => {
       }
 
       const response = await apiClient.post(endpoint, state);
+      if (response?.status === 200) {
+        setLoading(false);
+        // console.log("Registration successful:", response.data);
+        if (response.data.userAccount) {
+          localStorage.setItem(
+            "user",
+            JSON.stringify(response.data.userAccount)
+          );
+        }
 
-      if (response.status === 201) {
-        console.log("Registration successful:", response.data);
+        if (response.data.Teamlead) {
+          localStorage.setItem(
+            "teamlead",
+            JSON.stringify(response.data.Teamlead)
+          );
+        }
+
+        if (response.data.admin) {
+          localStorage.setItem("admin", JSON.stringify(response.data.admin));
+        }
+
+        showSuccessAlert("Registration successful! Please login.");
         navigate("/login");
-        // toast.success("Registration successful! Please login.");
-      } else {
-        // toast.error("Registration failed. Try again.");
       }
     } catch (err) {
+      setLoading(false);
       const message =
         err.response?.data?.message || "Registration failed. Try again.";
-      console.error("Registration error:", message);
-      // toast.error(message);
+      showErrorAlert(message);
     }
   };
 
@@ -197,6 +218,7 @@ const Register = () => {
                 }`}
                 placeholder="Enter your password"
               />
+
               <button
                 type="button"
                 onClick={() => setShowPassword((prev) => !prev)}
@@ -210,12 +232,24 @@ const Register = () => {
             </div>
 
             {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full py-3 bg-blue-800 text-gray-100 font-semibold rounded-lg hover:bg-blue-700 transition cursor-pointer"
-            >
-              Register
-            </button>
+            {loading ? (
+              <button
+                type="button"
+                className="w-full py-3 bg-blue-700 text-gray-100 font-semibold rounded-lg hover:bg-blue-700 transition"
+                disabled
+              >
+                {" "}
+                Registering {""}
+                <PulseLoader loading={loading} color="#ffffff" size={7} />{" "}
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="w-full py-3 bg-blue-800 text-gray-100 font-semibold rounded-lg hover:bg-blue-700 transition cursor-pointer"
+              >
+                Register
+              </button>
+            )}
           </form>
 
           {/* Login Link */}

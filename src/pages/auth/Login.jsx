@@ -2,11 +2,15 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash, IoHome } from "../../icons/Icons";
 import apiClient from "../../api/apiClient";
-import { showSuccessAlert } from "../../components/alert/alertService";
+import {
+  showErrorAlert,
+  showSuccessAlert,
+} from "../../components/alert/alertService";
+import { PulseLoader } from "react-spinners";
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [state, setState] = useState({
     email: "",
@@ -55,18 +59,21 @@ const Login = () => {
     if (!validate()) return;
 
     try {
+      setLoading(true);
       const response = await apiClient.post("auth/login", state);
-
       if (response?.status === 200) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        // toast.success("Login successful!");
-        // showSuccessAlert("Login successful!", "Welcome back!");
         showSuccessAlert("Signed in successfully!");
         navigate("/home");
       }
     } catch (error) {
-      // toast.error(error.response?.data?.message || "Login failed. Try again.");
+      setLoading(false);
+      if (error?.status === 401 || error?.status === 400) {
+        showErrorAlert("Invalid email or password.");
+      } else {
+        showErrorAlert("Login failed. Please try again.");
+      }
     }
   };
 
@@ -137,12 +144,24 @@ const Login = () => {
           </div>
 
           {/* Submit */}
-          <button
-            type="submit"
-            className="w-full py-3 bg-blue-800 text-white font-semibold rounded-lg hover:bg-blue-700 transition cursor-pointer"
-          >
-            Login
-          </button>
+          {loading ? (
+            <button
+              type="button"
+              className="w-full py-3 bg-blue-700 text-gray-100 font-semibold rounded-lg hover:bg-blue-700 transition"
+              disabled
+            >
+              {" "}
+              Loading {""}
+              <PulseLoader loading={loading} color="#ffffff" size={7} />{" "}
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="w-full py-3 bg-blue-800 text-white font-semibold rounded-lg hover:bg-blue-700 transition cursor-pointer"
+            >
+              Login
+            </button>
+          )}
         </form>
 
         <p className="mt-6 text-center text-gray-600">
